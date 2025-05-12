@@ -6,14 +6,17 @@ export const Sidebar = ({ onClose }) => {
   const [selectedItem, setSelectedItem] = useState('User');
   const [expanded, setExpanded] = useState(true);
   
+  // Determine if we're on mobile based on whether onClose is a meaningful function
+  const isMobile = typeof onClose === 'function' && onClose.toString() !== '() => {}';
+  
   const toggleSidebar = () => {
     setExpanded(!expanded);
   };
 
   const handleNavLink = (text) => {
     setSelectedItem(text);
-    // Optionally close sidebar on mobile when item is clicked
-    if (window.innerWidth < 768) {
+    // Close sidebar on mobile when item is clicked
+    if (isMobile) {
       onClose();
     }
   }
@@ -24,16 +27,18 @@ export const Sidebar = ({ onClose }) => {
       ${expanded ? 'w-40' : 'w-20'}
       relative
     `}>
-      {/* Close button */}
-      <button 
-        onClick={onClose} 
-        className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-100"
-      >
-        <X size={18} />
-      </button>
+      {/* Close button - only on mobile */}
+      {isMobile && (
+        <button 
+          onClick={onClose} 
+          className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-100"
+        >
+          <X size={18} />
+        </button>
+      )}
       
       <div>
-        <nav className="mt-10"> {/* Increased top margin to make room for close button */}
+        <nav className={isMobile ? "mt-10" : "mt-4"}> 
           <NavItem text={"User"} onClick={handleNavLink} select={selectedItem === 'User'} expanded={expanded}>
             <SquareLibrary className='w-4 h-4'/>
           </NavItem>
