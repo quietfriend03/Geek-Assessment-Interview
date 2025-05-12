@@ -23,7 +23,7 @@ export const NavItem = ({ text, children, onClick, expanded, select = false }) =
 
         {expanded && (
           <span className={`
-            ml-2 font-light text-sm duration-300
+            ml-2 font-light text-sm duration-00
             ${select ? 'text-blue-500' : 'text-gray-600'}
           `}>
             {text}
