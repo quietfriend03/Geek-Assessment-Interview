@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AppLayout from './layout/app-layout';
 import UserPage from './page/users';
 import UserDetailPage from './page/user-detail';
@@ -11,7 +11,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AppLayout />}>
-          <Route index element={<h1>Home Page</h1>} />
+          {/* Redirect root path to /user */}
+          <Route index element={<Navigate to="/user" replace />} />
           <Route path="user" element={<UserPage />} />
           <Route path="user/:id" element={<UserDetailPage />} />
           <Route path="album" element={<AlbumPage />} />
