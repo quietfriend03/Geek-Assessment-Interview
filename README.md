@@ -40,20 +40,6 @@ pnpm start
 
 This will start the development server at [http://localhost:5173](http://localhost:5173)
 
-### 4. Build for production
-
-```bash
-pnpm build
-```
-
-The built files will be in the `dist` directory.
-
-### 5. Preview the production build
-
-```bash
-pnpm preview
-```
-
 ## Project Structure
 
 ```
