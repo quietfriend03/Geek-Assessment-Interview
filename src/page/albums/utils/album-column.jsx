@@ -60,9 +60,8 @@ export const getColumns = (users) => {
         <Tooltip title="View Photos">
           <Button
             icon={<EyeOutlined />}
-            type="primary"
-            shape="round"
-            size="middle"
+            type="default"
+            size="small"
             onClick={() => navigateToAlbumPhotos(record.id)}
           >
             Show
