@@ -2,6 +2,10 @@
 
 A React application for browsing users and albums using JSONPlaceholder API.
 
+## Live Demo
+
+**[View Live Demo](https://geek-assessment-interview.vercel.app/)**
+
 ## Features
 
 - Browse users with detailed profiles
@@ -35,10 +39,24 @@ pnpm install
 ### 3. Start the development server
 
 ```bash
-pnpm start
+pnpm dev
 ```
 
 This will start the development server at [http://localhost:5173](http://localhost:5173)
+
+### 4. Build for production
+
+```bash
+pnpm build
+```
+
+The built files will be in the `dist` directory.
+
+### 5. Preview the production build
+
+```bash
+pnpm preview
+```
 
 ## Project Structure
 
@@ -69,6 +87,11 @@ geek-project/
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Vite](https://vitejs.dev/) - Build tool and dev server
 - [JSONPlaceholder](https://jsonplaceholder.typicode.com/) - Fake REST API
+
+## Deployment
+
+The application is deployed on Vercel. You can visit it at:
+[https://geek-assessment-interview.vercel.app/](https://geek-assessment-interview.vercel.app/)
 
 ## Available Scripts
 
