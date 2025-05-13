@@ -1,3 +1,5 @@
+// src/layouts/AppLayout.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/sidebar';
@@ -10,9 +12,10 @@ const AppLayout = () => {
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== 'undefined' && window.innerWidth < 768
   );
+  const [sidebarExpanded, setSidebarExpanded] = useState(true);
   const sidebarRef = useRef(null);
 
-  // Theo dõi resize để cập nhật isMobile và sidebarVisible
+  // Tracking resize to update isMobile and sidebarVisible
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
@@ -23,7 +26,7 @@ const AppLayout = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Click ngoài đóng sidebar trên mobile
+  // Close sidebar when clicking outside on mobile
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -39,23 +42,32 @@ const AppLayout = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isMobile, sidebarVisible]);
 
-  return (
-    <div className="flex flex-col bg-gray-50 min-h-screen">
-      <Header
-        isMobile={isMobile}
-        onMenuClick={() => setSidebarVisible(true)}
-      />
+  // Handle sidebar expansion state
+  const handleSidebarExpand = (isExpanded) => {
+    setSidebarExpanded(isExpanded);
+  };
 
-      <div className="flex flex-1 pt-16">
-        {/* Mobile: overlay + sidebar */}
+  return (
+    <div className="flex flex-col h-screen">
+      {/* Fixed header */}
+      <div className="fixed top-0 left-0 right-0 z-30">
+        <Header
+          isMobile={isMobile}
+          onMenuClick={() => setSidebarVisible(true)}
+        />
+      </div>
+
+      {/* Container: full viewport minus header height */}
+      <div className="flex pt-16 h-[calc(100vh-4rem)]">
+        {/* Mobile: overlay + sidebar with ease-in-out */}
         {isMobile && (
           <div
             className={`
-              fixed inset-0 z-40 flex
+              fixed inset-0 z-40 flex pt-16
               ${sidebarVisible ? 'pointer-events-auto' : 'pointer-events-none'}
             `}
           >
-            {/* Overlay fade in/out */}
+            {/* Overlay */}
             <div
               className={`
                 absolute inset-0 bg-black
@@ -65,7 +77,7 @@ const AppLayout = () => {
               onClick={() => setSidebarVisible(false)}
             />
 
-            {/* Sidebar slide in/out */}
+            {/* Sidebar */}
             <div
               ref={sidebarRef}
               className={`
@@ -73,22 +85,44 @@ const AppLayout = () => {
                 transform transition-transform duration-300 ease-in-out
                 ${sidebarVisible ? 'translate-x-0' : '-translate-x-full'}
               `}
-              style={{ width: 'fit-content' }}
+              style={{ width: 'fit-content', height: 'calc(100% - 4rem)' }}
             >
-              <Sidebar onClose={() => setSidebarVisible(false)} isMobile />
+              <Sidebar
+                onClose={() => setSidebarVisible(false)}
+                isMobile={true}
+                onExpand={handleSidebarExpand}
+              />
             </div>
           </div>
         )}
 
         {/* Desktop sidebar */}
         {!isMobile && (
-          <div ref={sidebarRef} className="z-20">
-            <Sidebar onClose={() => {}} isMobile={false} />
+          <div
+            ref={sidebarRef}
+            className="fixed left-0 top-16 bottom-0 z-20"
+          >
+            <Sidebar
+              onClose={() => {}}
+              isMobile={false}
+              onExpand={handleSidebarExpand}
+            />
           </div>
         )}
 
-        {/* Main content */}
-        <main className="flex-1 p-4 transition-all">
+        {/* Main content: scrollable and responsive to sidebar width */}
+        <main
+          className={`
+            flex-1 overflow-y-auto bg-gray-50 h-screen
+            transition-all duration-300 ease-in-out
+            ${!isMobile
+              ? sidebarExpanded
+                ? 'ml-40'
+                : 'ml-20'
+              : ''
+            }
+          `}
+        >
           <Outlet />
         </main>
       </div>
