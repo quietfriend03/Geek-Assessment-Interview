@@ -13,7 +13,6 @@ export const AppLayout = () => {
     function handleResize() {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      
       // Auto-hide sidebar on mobile, show on desktop
       if (mobile) {
         setSidebarVisible(false);
@@ -48,35 +47,54 @@ export const AppLayout = () => {
   }, [sidebarVisible, isMobile]);
   
   return (
-    <div className="flex bg-red-300 min-h-screen relative">
+    <div className="flex bg-gray-50 min-h-screen relative">
       {/* Toggle Button - only shown on mobile when sidebar is hidden */}
       {isMobile && !sidebarVisible && (
         <button 
           onClick={() => setSidebarVisible(true)}
-          className="absolute top-4 left-4 p-2 bg-white rounded-full shadow-md z-10"
+          className="absolute top-4 left-4 p-2 bg-white rounded-full shadow-md z-10 transition-all duration-300 ease-in-out hover:bg-gray-100"
         >
           <Menu size={24} />
         </button>
       )}
       
       {/* Mobile: Sidebar with overlay */}
-      {isMobile && sidebarVisible && (
-        <div className="fixed inset-0 bg-black bg-opacity-20 z-20">
-          <div ref={sidebarRef}>
-            <Sidebar onClose={() => setSidebarVisible(false)} />
+      {isMobile && (
+        <div 
+          className={`fixed inset-0 z-20 transition-opacity duration-300 ease-in-out
+            ${sidebarVisible ? 'visible' : 'invisible'}`}
+        >
+          {/* Overlay background */}
+          <div 
+            className={`absolute inset-0 bg-black transition-opacity duration-300 ease-in-out
+              ${sidebarVisible ? 'opacity-50' : 'opacity-0'}`}
+            onClick={() => setSidebarVisible(false)}
+          ></div>
+          
+          {/* Sidebar */}
+          <div 
+            ref={sidebarRef} 
+            className={`h-full transform transition-transform duration-300 ease-in-out relative
+              ${sidebarVisible ? 'translate-x-0' : '-translate-x-full'}`}
+            style={{width: 'fit-content'}}
+          >
+            <Sidebar onClose={() => setSidebarVisible(false)} isMobile={isMobile} />
           </div>
         </div>
       )}
       
       {/* Desktop: Sidebar without overlay */}
       {!isMobile && (
-        <div ref={sidebarRef} className="z-10">
-          <Sidebar onClose={() => {}} /> {/* Empty onClose for desktop */}
+        <div ref={sidebarRef} className="z-20 transition-all duration-300 ease-in-out">
+          <Sidebar onClose={() => {}} isMobile={isMobile} /> {/* Empty onClose for desktop */}
         </div>
       )}
       
       {/* Main content */}
-      <div className={`flex-1 p-4 ${!isMobile ? 'ml-40' : ''}`}>
+      <div 
+        className={`flex-1 p-4 transition-all duration-300 ease-in-out
+          ${!isMobile ? 'mt-2' : 'ml-12 mt-2'}`}
+      >
         <Outlet />
       </div>
     </div>

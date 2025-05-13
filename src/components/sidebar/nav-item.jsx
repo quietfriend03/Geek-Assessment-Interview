@@ -10,12 +10,12 @@ export const NavItem = ({ text, children, onClick, expanded, select = false }) =
         onClick={() => onClick(text)}
         className={`
           w-full h-10 flex items-center justify-start cursor-pointer my-1
-          rounded-lg transition-colors duration-0
+          rounded-lg transition-all duration-300 ease-in-out
           ${select ? 'bg-blue-100' : 'hover:bg-gray-100'}
         `}
       >
         <div className={`
-          flex-shrink-0 flex items-center justify-center ml-7
+          flex-shrink-0 flex items-center justify-center ml-7 transition-all duration-300 ease-in-out
           ${select ? 'text-blue-500' : 'text-gray-600'}
         `}>
           {children}
@@ -23,7 +23,7 @@ export const NavItem = ({ text, children, onClick, expanded, select = false }) =
 
         {expanded && (
           <span className={`
-            ml-2 font-light text-sm duration-00
+            ml-2 font-light text-sm transition-all duration-300 ease-in-out
             ${select ? 'text-blue-500' : 'text-gray-600'}
           `}>
             {text}
