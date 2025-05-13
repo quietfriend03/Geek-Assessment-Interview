@@ -111,7 +111,7 @@ const AppLayout = () => {
         {/* Main content: scrollable and responsive to sidebar width */}
         <main
           className={`
-            flex-1 bg-gray-50 will-change-scroll
+            flex-1 bg-gray-100 will-change-scroll
             transition-all duration-300 ease-in-out
             ${!isMobile
               ? sidebarExpanded
