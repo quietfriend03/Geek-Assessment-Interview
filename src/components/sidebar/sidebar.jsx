@@ -4,7 +4,7 @@ import { SquareLibrary, IdCard, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Sidebar = ({ onClose, isMobile }) => {
+const Sidebar = ({ onClose, isMobile, onExpand }) => {
   const [expanded, setExpanded] = useState(true);
   const location = useLocation();
   const currentPath = location.pathname.substring(1) || 'user';
@@ -16,10 +16,19 @@ const Sidebar = ({ onClose, isMobile }) => {
     const path = location.pathname.substring(1) || 'user';
     const formatted = path.charAt(0).toUpperCase() + path.slice(1);
     setSelectedItem(formatted);
-    console.log(isMobile)
   }, [location]);
 
-  const toggleSidebar = () => setExpanded(prev => !prev);
+  // Notify parent component when expanded state changes
+  useEffect(() => {
+    if (onExpand) {
+      onExpand(expanded);
+    }
+  }, [expanded, onExpand]);
+
+  const toggleSidebar = () => {
+    const newExpandedState = !expanded;
+    setExpanded(newExpandedState);
+  };
 
   const handleNavLink = (text) => {
     setSelectedItem(text);
@@ -74,6 +83,7 @@ const Sidebar = ({ onClose, isMobile }) => {
 Sidebar.propTypes = {
   onClose: PropTypes.func.isRequired,
   isMobile: PropTypes.bool.isRequired,
+  onExpand: PropTypes.func,
 };
 
 export default Sidebar;
