@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { NavItem } from './nav-item';
 import { SquareLibrary, IdCard, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Sidebar = ({ onClose, isMobile, onExpand }) => {
   const [expanded, setExpanded] = useState(true);
   const location = useLocation();
-  const currentPath = location.pathname.substring(1) || 'user';
+  const navigate = useNavigate();
+  
+  // Extract the base route from the location pathname
+  const getBaseRoute = (pathname) => {
+    const firstSegment = pathname.split('/')[1] || 'user';
+    return firstSegment;
+  };
+  
+  // Determine the initially selected item based on the URL
+  const initialPath = getBaseRoute(location.pathname);
   const [selectedItem, setSelectedItem] = useState(
-    currentPath.charAt(0).toUpperCase() + currentPath.slice(1)
+    initialPath.charAt(0).toUpperCase() + initialPath.slice(1)
   );
 
+  // Update selected item when route changes
   useEffect(() => {
-    const path = location.pathname.substring(1) || 'user';
+    const path = getBaseRoute(location.pathname);
     const formatted = path.charAt(0).toUpperCase() + path.slice(1);
     setSelectedItem(formatted);
-  }, [location]);
+  }, [location.pathname]);
 
   // Notify parent component when expanded state changes
   useEffect(() => {
@@ -31,6 +41,8 @@ const Sidebar = ({ onClose, isMobile, onExpand }) => {
   };
 
   const handleNavLink = (text) => {
+    const route = text.toLowerCase();
+    navigate(`/${route}`);
     setSelectedItem(text);
     if (isMobile) onClose();
   };
@@ -47,7 +59,7 @@ const Sidebar = ({ onClose, isMobile, onExpand }) => {
       <nav className="mt-4">
         <NavItem
           text="User"
-          onClick={handleNavLink}
+          onClick={() => handleNavLink('User')}
           expanded={expanded}
           select={selectedItem === 'User'}
         >
@@ -55,7 +67,7 @@ const Sidebar = ({ onClose, isMobile, onExpand }) => {
         </NavItem>
         <NavItem
           text="Album"
-          onClick={handleNavLink}
+          onClick={() => handleNavLink('Album')}
           expanded={expanded}
           select={selectedItem === 'Album'}
         >
@@ -64,7 +76,7 @@ const Sidebar = ({ onClose, isMobile, onExpand }) => {
       </nav>
 
       {!isMobile && (
-        <div className=" flex justify-center p-1">
+        <div className="flex justify-center p-1">
           <button
             onClick={toggleSidebar}
             className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition transform hover:scale-105 shadow-sm"
