@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Card, Skeleton, Typography, Divider, Avatar, Space } from 'antd';
+import { Card, Skeleton, Typography, Divider, Avatar, Space, Breadcrumb } from 'antd';
 import { ArrowLeftOutlined, UserOutlined } from '@ant-design/icons';
 import { AlbumGallery } from './album-gallery';
 import { fetchAlbumDetails } from '../utils/album-detail-api';
@@ -44,17 +44,44 @@ export const AlbumDetailPage = () => {
     loadAlbumDetails();
   }, [albumId]);
 
+  // Go back to previous page
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
+  // Go to user detail page
+  const goToUserDetail = () => {
+    if (user) {
+      navigate(`/user/${user.id}`);
+    }
+  };
+
   return (
     <div className="flex flex-col p-3">
-      {/* Back button */}
-      <Button 
-        type="link" 
-        icon={<ArrowLeftOutlined />} 
-        onClick={() => navigate('/album')}
-        className="self-start mb-4"
-      >
-        Back to Albums
-      </Button>
+      {/* Navigation */}
+      <div className="mb-4">
+        <Breadcrumb
+          items={[
+            {
+              title: 'Albums',
+              href: '/album',
+            },
+            {
+              title: album ? album.title : `Album ${albumId}`,
+            },
+          ]}
+          className="mb-3"
+        />
+        
+        {/* Back navigation with chevron and text */}
+        <div 
+          className="flex items-center text-blue-500 hover:text-blue-700 cursor-pointer transition-colors" 
+          onClick={handleGoBack}
+        >
+          <ArrowLeftOutlined className="mr-2" />
+          <span className="text-base">Show Albums</span>
+        </div>
+      </div>
 
       {/* Album Info Card */}
       <Card className="shadow-md mb-6">
@@ -74,13 +101,12 @@ export const AlbumDetailPage = () => {
                     src={getUserAvatarUrl(user.name, user.id)}
                     alt={user.name}
                   />
-                  <Button 
-                    type="link" 
-                    onClick={() => navigate(`/user/${user.id}`)}
-                    className="p-0"
+                  <span 
+                    className="text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
+                    onClick={goToUserDetail}
                   >
                     {user.name}
-                  </Button>
+                  </span>
                 </Space>
               </div>
             )}

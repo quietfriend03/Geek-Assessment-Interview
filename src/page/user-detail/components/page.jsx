@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Card, Skeleton, Avatar, Typography, Divider } from 'antd';
+import { Card, Skeleton, Avatar, Typography, Divider, Breadcrumb } from 'antd';
 import { ArrowLeftOutlined, UserOutlined } from '@ant-design/icons';
 import { UserAlbumTable } from './user-album-table';
 import { fetchUserById } from '../utils/user-detail-api';
@@ -42,17 +42,37 @@ export const UserDetailPage = () => {
     loadUserDetails();
   }, [userId]);
 
+  // Go back to previous page
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="flex flex-col p-3">
-      {/* Back button */}
-      <Button 
-        type="link" 
-        icon={<ArrowLeftOutlined />} 
-        onClick={() => navigate('/user')}
-        className="self-start mb-4"
-      >
-        Back to Users
-      </Button>
+      {/* Navigation */}
+      <div className="mb-3 ml-2">
+        <Breadcrumb
+          items={[
+            {
+              title: 'Users',
+              href: '/user',
+            },
+            {
+              title: user ? user.name : `User ${userId}`,
+            },
+          ]}
+          className="mb-3"
+        />
+
+        {/* Back navigation with chevron and text */}
+        <div 
+          className="flex items-center text-blue-500 hover:text-blue-700 cursor-pointer transition-colors" 
+          onClick={handleGoBack}
+        >
+          <ArrowLeftOutlined className="mr-2" />
+          <span className="text-base">Show Users</span>
+        </div>
+      </div>
 
       {/* User card */}
       <Card className="shadow-md mb-6">
