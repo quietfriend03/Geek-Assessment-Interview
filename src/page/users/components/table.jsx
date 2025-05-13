@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import { getColumns } from "../utils/columns";
 import { fetchUsers } from "../utils/user-api";
-// import '../assets/styles.css';
 
 export const UserTable = () => {
   const [loading, setLoading] = useState(false);
@@ -25,9 +24,9 @@ export const UserTable = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white rounded-md overflow-auto">
       <h2 className="text-xl font-semibold p-4 border-b">Users List</h2>
-      <div>
+      <div className="overflow-x-auto"> {/* Add horizontal scrolling container */}
         <Table
           columns={getColumns()}
           dataSource={users}
@@ -37,6 +36,7 @@ export const UserTable = () => {
           className="custom-table"
           rowClassName={() => "custom-table-row"}
           size="large" // Makes rows taller
+          scroll={{ x: 'max-content' }} // Enable horizontal scrolling
         />
       </div>
     </div>

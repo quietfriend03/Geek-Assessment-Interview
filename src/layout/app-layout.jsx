@@ -1,5 +1,3 @@
-// src/layouts/AppLayout.jsx
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/sidebar';
@@ -71,7 +69,7 @@ const AppLayout = () => {
             <div
               className={`
                 absolute inset-0 bg-black
-                transition-opacity duration-300 ease-in-out
+                transition-opacity duration-300 ease-in-out will-change-opacity
                 ${sidebarVisible ? 'opacity-50' : 'opacity-0'}
               `}
               onClick={() => setSidebarVisible(false)}
@@ -82,7 +80,7 @@ const AppLayout = () => {
               ref={sidebarRef}
               className={`
                 relative z-50
-                transform transition-transform duration-300 ease-in-out
+                transform transition-transform duration-300 ease-in-out will-change-transform
                 ${sidebarVisible ? 'translate-x-0' : '-translate-x-full'}
               `}
               style={{ width: 'fit-content', height: 'calc(100% - 4rem)' }}
@@ -113,7 +111,7 @@ const AppLayout = () => {
         {/* Main content: scrollable and responsive to sidebar width */}
         <main
           className={`
-            flex-1 overflow-y-auto bg-gray-50 h-screen
+            flex-1 bg-gray-50 will-change-scroll
             transition-all duration-300 ease-in-out
             ${!isMobile
               ? sidebarExpanded
@@ -122,6 +120,11 @@ const AppLayout = () => {
               : ''
             }
           `}
+          style={{ 
+            height: 'calc(100vh - 4rem)',
+            overflowY: 'auto',
+            overscrollBehavior: 'contain' 
+          }}
         >
           <Outlet />
         </main>
