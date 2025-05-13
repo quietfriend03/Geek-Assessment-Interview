@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { fetchUserAlbums } from '../utils/user-detail-api';
-import { getAlbumColumns } from '../utils/column';
+import { getUserAlbumsColumns } from '../utils/user-album-column';
 
 export const UserAlbumTable = ({ userId }) => {
   const [loading, setLoading] = useState(false);
@@ -26,9 +26,7 @@ export const UserAlbumTable = ({ userId }) => {
   }, [userId]);
 
   const handleViewPhotos = (albumId) => {
-    // This would navigate to a photos page
     console.log(`Navigate to photos for album ${albumId}`);
-    // Implementation can be expanded later
   };
 
   return (
@@ -36,7 +34,7 @@ export const UserAlbumTable = ({ userId }) => {
       <h2 className="text-xl font-semibold p-4 border-b">Albums List</h2>
       <div className="overflow-x-auto">
         <Table
-          columns={getAlbumColumns(handleViewPhotos)}
+          columns={getUserAlbumsColumns(handleViewPhotos)}
           dataSource={albums}
           loading={loading}
           rowKey="id"

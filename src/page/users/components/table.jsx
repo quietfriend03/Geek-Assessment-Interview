@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
-import { getColumns } from "../utils/columns";
+import { getUserColumns } from "../utils/user-columns";
 import { fetchUsers } from "../utils/user-api";
 
 export const UserTable = () => {
@@ -28,7 +28,7 @@ export const UserTable = () => {
       <h2 className="text-xl font-semibold p-4 border-b">Users List</h2>
       <div className="overflow-x-auto"> {/* Add horizontal scrolling container */}
         <Table
-          columns={getColumns()}
+          columns={getUserColumns()}
           dataSource={users}
           loading={loading}
           rowKey="id"

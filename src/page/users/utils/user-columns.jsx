@@ -1,8 +1,9 @@
 import React from 'react';
 import { Avatar, Button, Tooltip } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
+import { getUserAvatarUrl } from '../../../config/service/color';
 
-export const getColumns = () => {
+export const getUserColumns = () => {
   const navigateToUserDetails = (userId) => {
     window.location.href = `/user/${userId}`;
   };
@@ -18,14 +19,11 @@ export const getColumns = () => {
       title: 'Avatar',
       dataIndex: 'name',
       key: 'avatar',
-      render: (name) => {
-        // Format name for API call (replace spaces with + signs)
-        const formattedName = name.replace(/\s+/g, '+');
-        
+      render: (name, record) => {
         return (
           <Avatar 
             size="medium" 
-            src={`https://ui-avatars.com/api/?name=${formattedName}&background=random&color=fff`}
+            src={getUserAvatarUrl(name, record.id)}
             alt={name}
           />
         );

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Tooltip } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 
-export const getAlbumColumns = (onViewPhotos) => {
+export const getUserAlbumsColumns = (onViewPhotos) => {
   return [
     {
       title: 'ID',

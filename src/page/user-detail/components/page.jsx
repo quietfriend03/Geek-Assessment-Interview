@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Card, Skeleton, Avatar, Typography, Divider } from 'antd';
 import { ArrowLeftOutlined, UserOutlined } from '@ant-design/icons';
-import { UserAlbumTable } from './user-album';
+import { UserAlbumTable } from './user-album-table';
 import { fetchUserById } from '../utils/user-detail-api';
+import { getUserAvatarUrl } from '../../../config/service/color';
 
 const { Title, Text } = Typography;
 
@@ -63,7 +64,7 @@ export const UserDetailPage = () => {
             <Avatar 
               size={100} 
               icon={<UserOutlined />} 
-              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random&color=fff&size=128`}
+              src={getUserAvatarUrl(user.name, user.id)}
               alt={user.name}
             />
             
