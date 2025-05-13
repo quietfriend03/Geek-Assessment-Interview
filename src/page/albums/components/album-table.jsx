@@ -26,8 +26,8 @@ export const AlbumTable = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-md shadow-md">
-      <h2 className="text-xl font-semibold p-4 border-b">Albums List</h2>
+    <div className="bg-white rounded-md shadow-md p-1">
+      <h2 className="text-xl font-semibold p-3 border-b">Albums List</h2>
       <div className="overflow-x-auto">
         <Table
           columns={getColumns(users)}

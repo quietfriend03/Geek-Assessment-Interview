@@ -61,7 +61,7 @@ const AppLayout = () => {
         {isMobile && (
           <div
             className={`
-              fixed inset-0 z-40 flex pt-16
+              fixed inset-0 z-40 flex
               ${sidebarVisible ? 'pointer-events-auto' : 'pointer-events-none'}
             `}
           >
@@ -79,11 +79,11 @@ const AppLayout = () => {
             <div
               ref={sidebarRef}
               className={`
-                relative z-50
+                relative z-50 h-full
                 transform transition-transform duration-300 ease-in-out will-change-transform
                 ${sidebarVisible ? 'translate-x-0' : '-translate-x-full'}
               `}
-              style={{ width: 'fit-content', height: 'calc(100% - 4rem)' }}
+              style={{ width: 'fit-content' }}
             >
               <Sidebar
                 onClose={() => setSidebarVisible(false)}

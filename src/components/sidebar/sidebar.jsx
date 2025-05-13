@@ -38,9 +38,10 @@ const Sidebar = ({ onClose, isMobile, onExpand }) => {
   return (
     <div
       className={`
-        bg-white h-screen flex flex-col justify-between p-1
+        bg-white h-full flex flex-col justify-between p-1
         transition-all duration-300 ease-in-out
         ${expanded ? 'w-40' : 'w-20'}
+        ${isMobile ? 'pt-16' : ''}
       `}
     >
       <nav className="mt-4">
@@ -63,7 +64,7 @@ const Sidebar = ({ onClose, isMobile, onExpand }) => {
       </nav>
 
       {!isMobile && (
-        <div className="mb-16 flex justify-center p-1">
+        <div className=" flex justify-center p-1">
           <button
             onClick={toggleSidebar}
             className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition transform hover:scale-105 shadow-sm"

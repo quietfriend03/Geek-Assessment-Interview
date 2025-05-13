@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { fetchUserAlbums } from '../utils/user-detail-api';
 import { getUserAlbumsColumns } from '../utils/user-album-column';
+import { useNavigate } from 'react-router-dom';
 
 export const UserAlbumTable = ({ userId }) => {
   const [loading, setLoading] = useState(false);
   const [albums, setAlbums] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadAlbums = async () => {
@@ -26,7 +28,7 @@ export const UserAlbumTable = ({ userId }) => {
   }, [userId]);
 
   const handleViewPhotos = (albumId) => {
-    console.log(`Navigate to photos for album ${albumId}`);
+    navigate(`/album/${albumId}`);
   };
 
   return (

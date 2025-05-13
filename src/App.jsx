@@ -4,6 +4,7 @@ import AppLayout from './layout/app-layout';
 import UserPage from './page/users';
 import UserDetailPage from './page/user-detail';
 import AlbumPage from './page/albums';
+import AlbumDetailPage from './page/albums-detail';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
           <Route path="user" element={<UserPage />} />
           <Route path="user/:id" element={<UserDetailPage />} />
           <Route path="album" element={<AlbumPage />} />
-          <Route path="album/:id/photos" element={<h1>Album Photos Page</h1>} />
+          <Route path="album/:id" element={<AlbumDetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

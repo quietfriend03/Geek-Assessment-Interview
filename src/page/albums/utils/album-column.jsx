@@ -6,7 +6,7 @@ import { getUserAvatarUrl, getUserColor } from '../../../config/service/color';
 
 export const getColumns = (users) => {
   const navigateToAlbumPhotos = (albumId) => {
-    window.location.href = `/album/${albumId}/photos`;
+    window.location.href = `/album/${albumId}`;
   };
 
   return [
